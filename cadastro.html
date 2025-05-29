@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Monolito Integrador Bancário - Cadastro</title>
+    <link rel="stylesheet" href="styleCadastro.css">
+</head>
+
+<body>
+    <header>
+        <h1>Cadastro de Empresas, Bancos e Dados de Integração</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="cadastro.html">Cadastros</a></li>
+                <li><a href="pagamentos.html">Lançamentos</a></li>
+                <li><a href="conciliacao.html">Conciliação</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="cadastro-empresas">
+            <h2>Cadastro de Empresas (Dados para Remessa)</h2>
+            <form id="form-cadastro-empresas">
+                <div class="form-group">
+                    <label for="nome-empresa">Nome/Razão Social:</label>
+                    <input type="text" id="nome-empresa" name="nome-empresa" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="cnpj">CNPJ:</label>
+                    <input type="text" id="cnpj" name="cnpj" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="endereco-rua">Endereço (Rua, Número, Complemento):</label>
+                    <input type="text" id="endereco-rua" name="endereco-rua">
+                </div>
+
+                <div class="form-group">
+                    <label for="endereco-bairro">Bairro:</label>
+                    <input type="text" id="endereco-bairro" name="endereco-bairro">
+                </div>
+
+                <div class="form-group">
+                    <label for="endereco-cidade">Cidade:</label>
+                    <input type="text" id="endereco-cidade" name="endereco-cidade">
+                </div>
+
+                <div class="form-group">
+                    <label for="endereco-estado">Estado:</label>
+                    <input type="text" id="endereco-estado" name="endereco-estado">
+                </div>
+
+                <div class="form-group">
+                    <label for="cep">CEP:</label>
+                    <input type="text" id="cep" name="cep">
+                </div>
+
+                <div class="form-group">
+                    <label for="codigo-banco">Código do Banco:</label>
+                    <input type="text" id="codigo-banco" name="codigo-banco" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="agencia">Agência (com DV):</label>
+                    <input type="text" id="agencia" name="agencia" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="conta-corrente">Conta Corrente (com DV):</label>
+                    <input type="text" id="conta-corrente" name="conta-corrente" required>
+                </div>
+
+                <button type="submit">Cadastrar Empresa</button>
+            </form>
+        </section>
+
+        <section id="cadastro-bancos">
+            <h2>Cadastro de Bancos</h2>
+            <form id="form-cadastro-bancos">
+                <div class="form-group">
+                    <label for="nome-banco">Nome do Banco:</label>
+                    <input type="text" id="nome-banco" name="nome-banco" required>
+                </div>
+                <div class="form-group">
+                    <label for="codigo-banco-banco">Código do Banco:</label>
+                    <input type="text" id="codigo-banco-banco" name="codigo-banco-banco" required>
+                </div>
+
+                <button type="submit">Cadastrar Banco</button>
+            </form>
+        </section>
+
+        <section id="dados-integracao">
+            <h2>Cadastro de Dados de Integração Bancária</h2>
+            <form id="form-dados-integracao">
+                <div class="form-group">
+                    <label for="agencia-integracao">Agência:</label>
+                    <input type="text" id="agencia-integracao" name="agencia-integracao" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="conta-integracao">Conta:</label>
+                    <input type="text" id="conta-integracao" name="conta-integracao" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="tipo-conta-integracao">Tipo de Conta:</label>
+                    <select id="tipo-conta-integracao" name="tipo-conta-integracao">
+                        <option value="corrente">Corrente</option>
+                        <option value="poupanca">Poupanca</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="chave-pix-integracao">Chave Pix:</label>
+                    <input type="text" id="chave-pix-integracao" name="chave-pix-integracao">
+                </div>
+
+                <div class="form-group">
+                    <label for="usuario-integracao">Usuário:</label>
+                    <input type="text" id="usuario-integracao" name="usuario-integracao">
+                </div>
+
+                <div class="form-group">
+                    <label for="senha-integracao">Senha:</label>
+                    <input type="password" id="senha-integracao" name="senha-integracao">
+                </div>
+
+                <div class="form-group">
+                    <label for="chave-publica-integracao">Chave Pública:</label>
+                    <input type="text" id="chave-publica-integracao" name="chave-publica-integracao">
+                </div>
+
+                <button type="submit">Cadastrar Dados</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Monolito Integrador Bancário</p>
+    </footer>
+
+</body>
+
+</html>
