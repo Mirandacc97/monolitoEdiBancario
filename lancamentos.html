@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Monolito Integrador Bancário - Lançamentos</title>
+  <link rel="stylesheet" href="styleLancamentos.css">
+</head>
+<body>
+  <header>
+    <h1>Lançamentos de Boletos</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="cadastro.html">Cadastros</a></li>
+        <li><a href="lancamentos.html">Lançamentos</a></li>
+        <li><a href="conciliacao.html">Conciliação</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section id="lancamento-boletos">
+      <h2>Lançamento de Boletos</h2>
+
+      <div id="linha-digitavel-section">
+        <h3>Digitação da Linha Digitável</h3>
+        <input type="text" id="linha-digitavel-input" placeholder="Digite a linha digitável"
+        value="03399103177839229094209903101047111050000003961">
+        <button id="ler-linha-digitavel">Ler Linha Digitável</button>
+        <div id="linha-digitavel-result"></div>
+      </div>
+
+      <form id="form-lancamento-boleto">
+        <div class="form-group">
+          <label for="tipo-lancamento">Tipo de Lançamento:</label>
+          <select id="tipo-lancamento" name="tipo-lancamento" required>
+            <option value="cobrança">Cobrança</option>
+            <option value="pagamento">Pagamento</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="data-vencimento">Data de Vencimento:</label>
+          <input type="date" id="data-vencimento" name="data-vencimento" required>
+        </div>
+
+        <div class="form-group">
+          <label for="valor-boleto">Valor do Boleto:</label>
+          <input type="number" id="valor-boleto" name="valor-boleto" step="0.01" required>
+        </div>
+
+        <div class="form-group">
+          <label for="beneficiario-pagador">Beneficiário/Pagador:</label>
+          <input type="text" id="beneficiario-pagador" name="beneficiario-pagador" required>
+        </div>
+
+        <div class="form-group">
+          <label for="documento">Documento:</label>
+          <input type="text" id="documento" name="documento">
+        </div>
+
+        <div class="form-group">
+          <label for="observacoes">Observações:</label>
+          <textarea id="observacoes" name="observacoes" rows="4" cols="50"></textarea>
+        </div>
+
+        <button type="submit">Lançar Boleto</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2024 Monolito Integrador Bancário</p>
+  </footer>
+
+  <script>
+  document.getElementById('ler-linha-digitavel').addEventListener('click', function() {
+    let linhaDigitavel = document.getElementById('linha-digitavel-input').value.replace(/\D/g, '');
+    parseLinhaDigitavel(linhaDigitavel);
+  });
+
+  function parseLinhaDigitavel(linhaDigitavel) {
+    let dataVencimento = '';
+    let valor = '';
+
+    if (linhaDigitavel.length === 47) {
+        // Monta código de barras (44 dígitos) a partir da linha digitável
+        let codigoBarras = 
+            linhaDigitavel.substr(0,4) +
+            linhaDigitavel.substr(32,15) +
+            linhaDigitavel.substr(4,5) +
+            linhaDigitavel.substr(10,10) +
+            linhaDigitavel.substr(21,10);
+
+        // Fator de vencimento: posições 5 a 8 (índices 5 a 8)
+        const fatorVencimento = parseInt(codigoBarras.substring(5, 9), 10) - 1000;
+
+        // Valor: posições 9 a 19 (índices 9 a 19)
+        valor = parseInt(codigoBarras.substring(9, 19), 10) / 100;
+
+        // Sempre usa a nova base: 22/02/2025
+        let baseDate = new Date(2025, 1, 22); // mês 1 = fevereiro (0-indexed)
+
+        if (!isNaN(fatorVencimento) && fatorVencimento > 0) {
+            const dueDateMilliseconds = baseDate.getTime() + (fatorVencimento * 24 * 60 * 60 * 1000);
+            const dueDateObj = new Date(dueDateMilliseconds);
+            const year = dueDateObj.getFullYear();
+            const month = String(dueDateObj.getDate()).padStart(2, '0');
+            const day = String(dueDateObj.getMonth() + 1).padStart(2, '0');
+            dataVencimento = `${year}-${month}-${day}`;
+        } else {
+            dataVencimento = '';
+        }
+
+        // Preenche os campos do formulário
+        document.getElementById('data-vencimento').value = dataVencimento;
+        document.getElementById('valor-boleto').value = valor.toFixed(2);
+    } else {
+        alert('Linha digitável inválida (deve conter 47 dígitos para boletos bancários).');
+        document.getElementById('linha-digitavel-result').innerHTML = '';
+        document.getElementById('data-vencimento').value = '';
+        document.getElementById('valor-boleto').value = '';
+    }
+}
+
+  </script>
+</body>
+</html>
